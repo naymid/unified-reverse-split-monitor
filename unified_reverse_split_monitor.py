@@ -150,12 +150,27 @@ HEADERS = {
 # ---------------------------------------------------------------------------
 # Logging setup
 # ---------------------------------------------------------------------------
+import sys
 
-logging.basicConfig(
-    filename="monitor_log.log",
-    level=logging.DEBUG,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
+# Create a formatter that is shared by both handlers
+_log_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+
+# Set up the root logger
+_root_logger = logging.getLogger()
+_root_logger.setLevel(logging.DEBUG)
+
+# Stream handler for stdout (appears in Railway logs)
+_stream_handler = logging.StreamHandler(sys.stdout)
+_stream_handler.setLevel(logging.DEBUG)
+_stream_handler.setFormatter(_log_formatter)
+_root_logger.addHandler(_stream_handler)
+
+# File handler for persistent log file
+_file_handler = logging.FileHandler("monitor_log.log")
+_file_handler.setLevel(logging.DEBUG)
+_file_handler.setFormatter(_log_formatter)
+_root_logger.addHandler(_file_handler)
+
 
 
 # ---------------------------------------------------------------------------
