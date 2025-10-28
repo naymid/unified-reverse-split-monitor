@@ -4,3 +4,4 @@ pandas>=1.5
 yfinance>=0.2
 pyrate-limiter>=2.10
 openai>=1.2
+lxml>=4.9.3
